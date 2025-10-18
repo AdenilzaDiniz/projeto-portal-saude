@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel do Profissional</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>👩‍⚕️ Painel do Profissional</h1>
+    <nav>
+      <ul>
+        <li><a href="#agenda">Agenda</a></li>
+        <li><a href="#pacientes">Pacientes</a></li>
+        <li><a href="#documentos">Documentos</a></li>
+        <li><a href="/logout">Sair</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="agenda">
+    <h2>📅 Agendamentos</h2>
+    <div id="listaAgendamentos"></div>
+  </section>
+
+  <section id="pacientes">
+    <h2>👥 Meus Pacientes</h2>
+    <div id="listaPacientes"></div>
+  </section>
+
+  <section id="documentos">
+    <h2>📄 Documentos</h2>
+    <form>
+      <input type="file" name="documento" />
+      <button type="submit">Enviar</button>
+    </form>
+    <div id="documentosEnviados"></div>
+  </section>
+
+  <script src="profissional.js"></script>
+  <section id="agenda">
+  <h2>📅 Agendamentos</h2>
+  <button onclick="baixarCSV()">Exportar CSV</button>
+  <button onclick="baixarExcel()">Exportar Excel</button>
+  <canvas id="graficoAtendimentos" width="600" height="300"></canvas>
+  <div id="listaAgendamentos"></div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</body>
+</html>
+<h2>Agendar Atendimento</h2>
+<form onsubmit="agendar(event)">
+  <input type="text" id="servico" placeholder="Serviço desejado" required />
+  <input type="datetime-local" id="data" required />
+  <button type="submit">Agendar</button>
+</form>

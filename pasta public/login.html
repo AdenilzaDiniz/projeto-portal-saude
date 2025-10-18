@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login e Cadastro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h2>Entrar na sua conta</h2>
+    <form action="/login" method="POST">
+      <input type="text" name="username" placeholder="Usuário" required />
+      <input type="password" name="password" placeholder="Senha" required />
+      <button type="submit">Entrar</button>
+    </form>
+
+    <hr />
+
+    <h2>Criar nova conta</h2>
+    <form action="/cadastro" method="POST">
+      <input type="text" name="username" placeholder="Novo usuário" required />
+      <input type="password" name="password" placeholder="Nova senha" required />
+      <select name="tipo" required>
+        <option value="">Selecione o tipo de usuário</option>
+        <option value="leitor">Leitor</option>
+        <option value="editor">Editor</option>
+        <option value="admin">Administrador</option>
+      </select>
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <p><a href="index.html">← Voltar à página inicial</a></p>
+  </main>
+</body>
+</html>

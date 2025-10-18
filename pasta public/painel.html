@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel do Usuário</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: Arial, background: #f9f9f9; margin: 0; padding: 20px; }
+    header { background: #007bff; color: white; padding: 20px; text-align: center; }
+    .cards { display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
+    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px #ccc; flex: 1; min-width: 200px; }
+    canvas { max-width: 100%; margin-top: 30px; }
+    a.logout { display: inline-block; margin-top: 10px; color: #007bff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="bemvindo">Bem-vindo!</h1>
+    <a href="/logout" class="logout">Sair</a>
+  </header>
+
+  <section class="cards">
+    <div class="card">
+      <h3>Agendamentos</h3>
+      <p id="totalAgendamentos">Carregando...</p>
+    </div>
+    <div class="card">
+      <h3>Documentos</h3>
+      <p id="totalDocumentos">Carregando...</p>
+    </div>
+    <div class="card">
+      <h3>Pacientes</h3>
+      <p id="totalPacientes">Carregando...</p>
+    </div>
+  </section>
+
+  <canvas id="graficoAtendimentos" height="100"></canvas>
+
+  <script>
+    // Dados do usuário
+    fetch('/api/usuario')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('bemvindo').innerText = `Bem-vindo, ${data.nome}`;
+      });
+
+    // Contadores
+    fetch('/api/agendamentos')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('totalAgendamentos').innerText = `${data.length} agendamentos`;
+        gerarGrafico(data);
+      });
+
+    fetch('/api/documentos')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('totalDocumentos').innerText = `${data.length} documentos`;
+      });
+
+    fetch('/api/pacientes')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('totalPacientes').innerText = `${data.length} pacientes`;
+      });
+
+    // Gráfico de atendimentos por serviço
+    function gerarGrafico(dados) {
+      const contagem = {};
+      dados.forEach(item => {
+        contagem[item.servico] = (contagem[item.servico] || 0) + 1;
+      });
+
+      const ctx = document.getElementById('graficoAtendimentos').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: Object.keys(contagem),
+          datasets: [{
+            label: 'Atendimentos por serviço',
+            data: Object.values(contagem),
+            backgroundColor: '#007bff'
+          }]
+        }
+      });
+    }
+  </script>
+</body>
+</html>
+
